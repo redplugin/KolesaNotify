@@ -32,7 +32,7 @@ msg['From'] = "kolesanotify@yandex.kz"  # Type your own gmail address
 msg['To'] = "darmen89@yandex.ru"  # Type your friend's mail address
 msg['Subject'] = "Kolesa notify: " + lastUploadedCarId  # Type the subject of your message
 msg.attach(MIMEText(message, 'plain'))
-server = smtplib.SMTP('smtp.yandex.com: 465')
+server = smtplib.SMTP('smtp.yandex.com: 587')
 server.starttls()
 server.login('kolesanotify', password)
 server.sendmail(msg['From'], msg['To'], msg.as_string())
