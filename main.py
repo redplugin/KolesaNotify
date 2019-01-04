@@ -27,13 +27,13 @@ lastUploadedCarId = lastUploadedCar['id']
 
 message = lastUploadedCarId  # Type your message
 msg = MIMEMultipart()
-password = "Usmc1775le!"  # Type your password
-msg['From'] = "darmen1@gmail.com"  # Type your own gmail address
+password = "Usmc1775ex!"  # Type your password
+msg['From'] = "kolesanotify@yandex.kz"  # Type your own gmail address
 msg['To'] = "darmen89@yandex.ru"  # Type your friend's mail address
 msg['Subject'] = "Kolesa notify: " + lastUploadedCarId  # Type the subject of your message
 msg.attach(MIMEText(message, 'plain'))
-server = smtplib.SMTP('smtp.gmail.com: 587')
+server = smtplib.SMTP('smtp.yandex.com: 465')
 server.starttls()
-server.login(msg['From'], password)
+server.login('kolesanotify', password)
 server.sendmail(msg['From'], msg['To'], msg.as_string())
 server.quit()
