@@ -28,13 +28,18 @@ if lastUploadedCarId not in fileHandle.readline():
     newFile.write(lastUploadedCarId)
     newFile.close()
 
+    # car info
+    carName = lastUploadedCar.select_one('.a-el-info-title > a').text.strip()
+    carYear = lastUploadedCar.select_one('.year').text.strip()
+    carPrice = lastUploadedCar.select_one('.price').text.strip()
+
     # send message
-    message = lastUploadedCarId  # Type your message
+    message = carName + '\n' + ' ' + carYear + ' for ' + carPrice + '\n' + lastUploadedCarId
     msg = MIMEMultipart()
     password = "Usmc1775ex!"  # Type your password
     msg['From'] = "kolesanotify@yandex.kz"  # Type your own gmail address
     msg['To'] = "darmen89@yandex.ru"  # Type your friend's mail address
-    msg['Subject'] = "Kolesa notify: " + lastUploadedCarId  # Type the subject of your message
+    msg['Subject'] = "New car: " + carName  # Type the subject of your message
     msg.attach(MIMEText(message, 'plain'))
     server = smtplib.SMTP('smtp.yandex.com: 587')
     server.starttls()
