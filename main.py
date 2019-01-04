@@ -23,7 +23,6 @@ fileHandle = open('text.txt', 'r')
 
 # if the previous last car id and last car id don't match, write new last id to the file and send email:
 if lastUploadedCarId not in fileHandle.readline():
-    print("new")
     newFile = open("text.txt", "w")
     newFile.write(lastUploadedCarId)
     newFile.close()
