@@ -5,9 +5,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 # Download page
-getPage = requests.get('https://kolesa.kz/cars/region-almatinskaya-oblast' +
-                       '/?auto-emergency=1&auto-car-transm=2345&auto-sweel=1' +
-                       '&auto-car-volume[to]=2&price[to]=900%20000&year[from]=1993')
+query = 'https://kolesa.kz/cars/region-almatinskaya-oblast'\
+                       '/?auto-emergency=1&auto-car-transm=2345&auto-sweel=1'\
+                       '&auto-car-volume[to]=2&price[to]=900%20000&year[from]=1993'
+getPage = requests.get(query)
 
 # if error it will stop the program
 getPage.raise_for_status()
@@ -33,7 +34,7 @@ if lastUploadedCarId not in fileHandle.readline():
     carPrice = lastUploadedCar.select_one('.price').text.strip()
 
     # send message
-    message = carName + '\n' + ' ' + carYear + ' for ' + carPrice + '\n' + lastUploadedCarId
+    message = carName + '\n' + ' ' + carYear + ' for ' + carPrice + '\n\n' + query
     msg = MIMEMultipart()
     password = "Usmc1775ex!"  # Type your password
     msg['From'] = "kolesanotify@yandex.kz"  # Type your own gmail address
