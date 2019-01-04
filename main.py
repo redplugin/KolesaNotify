@@ -5,7 +5,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 # Download page
-getPage = requests.get('https://kolesa.kz/cars/region-almatinskaya-oblast/?auto-emergency=1&auto-car-transm=2345&auto-sweel=1&auto-car-volume[to]=2&price[to]=900%20000&year[from]=1993')
+getPage = requests.get('https://kolesa.kz/cars/region-almatinskaya-oblast' +
+                       '/?auto-emergency=1&auto-car-transm=2345&auto-sweel=1' +
+                       '&auto-car-volume[to]=2&price[to]=900%20000&year[from]=1993')
 
 # if error it will stop the program
 getPage.raise_for_status()
@@ -16,24 +18,27 @@ lastUploadedCar = searchResults.select_one('#results .vw-item')
 
 lastUploadedCarId = lastUploadedCar['id']
 
-#conn = smtplib.SMTP('smtp.gmail.com', 465)  # smtp address and port
-#conn.ehlo()  # call this to start the connection
-#conn.starttls()  # starts tls encryption. When we send our password it will be encrypted.
-#conn.login('darmen1', 'Usmc1775le!')
-#conn.sendmail('darmen1@gmail.com', 'darmen89@yandex.ru',
-#              'Subject: Kolesa notify: ' + lastUploadedCarId)
-#conn.quit()
+# open the file where previous last car id is:
+fileHandle = open('text.txt', 'r')
 
+# if the previous last car id and last car id don't match, write new last id to the file and send email:
+if lastUploadedCarId not in fileHandle.readline():
+    print("new")
+    newFile = open("text.txt", "w")
+    newFile.write(lastUploadedCarId)
+    newFile.close()
 
-message = lastUploadedCarId  # Type your message
-msg = MIMEMultipart()
-password = "Usmc1775ex!"  # Type your password
-msg['From'] = "kolesanotify@yandex.kz"  # Type your own gmail address
-msg['To'] = "darmen89@yandex.ru"  # Type your friend's mail address
-msg['Subject'] = "Kolesa notify: " + lastUploadedCarId  # Type the subject of your message
-msg.attach(MIMEText(message, 'plain'))
-server = smtplib.SMTP('smtp.yandex.com: 587')
-server.starttls()
-server.login('kolesanotify', password)
-server.sendmail(msg['From'], msg['To'], msg.as_string())
-server.quit()
+    # send message
+    message = lastUploadedCarId  # Type your message
+    msg = MIMEMultipart()
+    password = "Usmc1775ex!"  # Type your password
+    msg['From'] = "kolesanotify@yandex.kz"  # Type your own gmail address
+    msg['To'] = "darmen89@yandex.ru"  # Type your friend's mail address
+    msg['Subject'] = "Kolesa notify: " + lastUploadedCarId  # Type the subject of your message
+    msg.attach(MIMEText(message, 'plain'))
+    server = smtplib.SMTP('smtp.yandex.com: 587')
+    server.starttls()
+    server.login('kolesanotify', password)
+    server.sendmail(msg['From'], msg['To'], msg.as_string())
+    server.quit()
+
