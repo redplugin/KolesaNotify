@@ -6,8 +6,9 @@ from email.mime.text import MIMEText
 
 # Download page
 query = 'https://kolesa.kz/cars/region-almatinskaya-oblast'\
-                       '/?auto-emergency=1&auto-car-transm=2345&auto-sweel=1'\
-                       '&auto-car-volume[to]=2&price[to]=900%20000&year[from]=1993'
+           '/?auto-emergency=1&auto-car-transm=2345&auto-sweel=1'\
+           '&auto-car-volume[to]=2&price[to]=900%20000&year[from]=1993'
+
 getPage = requests.get(query)
 
 # if error it will stop the program
